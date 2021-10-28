@@ -9,6 +9,10 @@
   home.username = "marci";
   home.homeDirectory = "/home/marci";
 
+
+  nixpkgs.config.allowUnfree = true;
+
+
   programs.gpg = {
     enable = true;
   };
@@ -23,7 +27,19 @@
     git-crypt
     gnupg
     pinentry_qt
+    slack
+    lxappearance
+    rofi
   ];
+
+  gtk = {
+    enable = true;
+    font.name = "source-code-pro 9";
+    theme = {
+      name = "Juno-Theme";
+      package = pkgs.juno-theme;
+    };
+  };
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

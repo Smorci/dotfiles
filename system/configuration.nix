@@ -80,6 +80,11 @@
     wget
     firefox
     mpv
+    feh
+    i3lock-fancy
+    vscodium
+    xcalib
+    arandr
   ];
 
   fonts = {
@@ -102,6 +107,8 @@
       terminus_font
       terminus_font_ttf
       ubuntu_font_family
+      font-awesome_5
+      iosevka
     ];
   };
 
