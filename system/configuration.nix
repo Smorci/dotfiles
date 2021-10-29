@@ -58,7 +58,7 @@
       };
       windowManager = {
         i3.enable = true;
-	i3.extraPackages = with pkgs; [ i3status dmenu ];
+	i3.extraPackages = with pkgs; [ i3status dmenu i3lock-fancy];
       };
       displayManager = {
 	sddm.enable = true;
@@ -81,9 +81,9 @@
     firefox
     mpv
     feh
-    i3lock-fancy
     vscodium
     xcalib
+    xtermcontrol
     arandr
   ];
 
