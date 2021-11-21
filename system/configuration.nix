@@ -46,6 +46,9 @@
   # Enable sound.
    sound.enable = true;
    hardware.pulseaudio.enable = true;
+   hardware.bluetooth.enable = true;
+
+   services.blueman.enable = true;
 
   # Enable the X11 windowing system.
   # Enable touchpad support (enabled default in most desktopManager).

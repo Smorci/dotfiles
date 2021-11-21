@@ -8,8 +8,7 @@
   # paths it should manage.
   home.username = "marci";
   home.homeDirectory = "/home/marci";
-
-
+ 
   nixpkgs.config.allowUnfree = true;
 
 
@@ -30,6 +29,13 @@
     slack
     lxappearance
     rofi
+    dpkg
+    patchelf
+    binutils
+    discord
+    arandr
+    xorg.xmodmap
+    transmission-gtk
   ];
 
   gtk = {

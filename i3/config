@@ -44,6 +44,9 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 bindsym XF86MonBrightnessUp exec xcalib -c # reset screen brightness (100% brightness)
 bindsym XF86MonBrightnessDown exec xcalib -co 95 -a # decrease screen brightness
 
+# Exec screen layout
+bindsym $mod+m exec ~/.screenlayout/monitorRight.sh
+
 # Touchpad controls
 # bindsym XF86TouchpadToggle exec /some/path/toggletouchpad.sh # toggle touchpad
 
@@ -200,12 +203,12 @@ exec firefox
 # X database utility 
 exec_always xrdb -load ~/.dotfiles/xresources/.Xresources
 # Wallpaper
-exec_always feh --bg-scale /home/marci/Pictures/cosmic-wallpaper-9.jpg
+exec_always feh --bg-scale /home/marci/Pictures/minimal-wallpaper.jpg
 
-set $bg-color 	         #002b36
-set $inactive-bg-color   #243837
+set $bg-color 	         #1f5563
+set $inactive-bg-color   #002b36
 set $text-color          #c2cfd3
-set $inactive-text-color #6dcec9
+set $inactive-text-color #c2cfd3
 set $urgent-bg-color     #03070a
 
 # window colors
