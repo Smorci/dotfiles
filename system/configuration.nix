@@ -67,6 +67,9 @@
 	sddm.enable = true;
       };
       layout = "us";
+      deviceSection = ''
+        Option "TearFree" "true"
+      '';
     };
   };
 

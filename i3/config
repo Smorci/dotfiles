@@ -44,8 +44,6 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 bindsym XF86MonBrightnessUp exec xcalib -c # reset screen brightness (100% brightness)
 bindsym XF86MonBrightnessDown exec xcalib -co 95 -a # decrease screen brightness
 
-# Exec screen layout
-bindsym $mod+m exec ~/.screenlayout/monitorRight.sh
 
 # Touchpad controls
 # bindsym XF86TouchpadToggle exec /some/path/toggletouchpad.sh # toggle touchpad
@@ -159,7 +157,7 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 # Force applications to open in a specific workspace
 
 assign [class="Slack"] $ws5
-assign [class="Firefox"] $ws4
+# assign [class="Firefox"] $ws4
  
 # reload the configuration file
 bindsym $mod+Shift+c reload
