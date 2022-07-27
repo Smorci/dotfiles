@@ -40,9 +40,16 @@
     nodejs
     flameshot
     keepass
-    soulseekqt
     tdesktop
     unzip
+    aircrack-ng
+    soulseekqt
+    pcmanfm
+    micro
+    vlc
+    xclip
+    elmPackages.elm
+    libreoffice
     ];
 
   gtk = {

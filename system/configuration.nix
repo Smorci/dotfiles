@@ -66,7 +66,8 @@
       displayManager = {
 	sddm.enable = true;
       };
-      layout = "us";
+      layout = "us,hu";
+      xkbOptions = "grp:alt_shift_toggle";
       deviceSection = ''
         Option "TearFree" "true"
       '';
@@ -76,6 +77,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.marci = {
     isNormalUser = true;
+    shell = pkgs.bash;
     extraGroups = [ "wheel" "networkmanager" "audio" ]; # Enable ‘sudo’ for the user.
   };
 
@@ -91,6 +93,7 @@
     xcalib
     xtermcontrol
     arandr
+    wirelesstools
   ];
 
   fonts = {
