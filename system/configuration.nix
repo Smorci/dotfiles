@@ -61,10 +61,10 @@
       };
       windowManager = {
         i3.enable = true;
-	i3.extraPackages = with pkgs; [ i3status dmenu i3lock-fancy];
+	      i3.extraPackages = with pkgs; [ i3status dmenu i3lock-fancy];
       };
       displayManager = {
-	sddm.enable = true;
+	      sddm.enable = true;
       };
       layout = "us,hu";
       xkbOptions = "grp:alt_shift_toggle";
