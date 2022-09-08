@@ -31,6 +31,7 @@
     dpkg
     patchelf
     binutils
+    coreutils
     discord
     arandr
     xorg.xmodmap
@@ -48,16 +49,18 @@
     xclip
     elmPackages.elm
     libreoffice
+    nixfmt
+    gnutar
     ];
 
-  gtk = {
-    enable = true;
-    font.name = "source-code-pro 9";
-    theme = {
-      name = "Juno-Theme";
-      package = pkgs.juno-theme;
-    };
-  };
+  # gtk = {
+  #   enable = true;
+  #   font.name = "source-code-pro 9";
+  #   theme = {
+  #     name = "Juno-Theme";
+  #     package = pkgs.juno-theme;
+  #   };
+  # };
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
