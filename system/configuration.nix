@@ -77,7 +77,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.marci = {
     isNormalUser = true;
-    shell = pkgs.bash;
+    shell = pkgs.zsh;
     extraGroups = [ "wheel" "networkmanager" "audio" ]; # Enable ‘sudo’ for the user.
   };
 
@@ -95,6 +95,7 @@
     arandr
     wirelesstools
   ];
+  environment.shells = with pkgs; [ zsh ];
 
   fonts = {
     enableDefaultFonts = true;
@@ -122,6 +123,8 @@
   };
 
   nixpkgs.config.allowUnfree = true;
+
+	programs.zsh.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
