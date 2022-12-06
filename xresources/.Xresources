@@ -16,7 +16,7 @@ XTerm*title: toty
 
 ! Fonts ====================================================
 ! set font and fontsize
-XTerm*faceName: source-code-pro
+XTerm*faceName: DejaVu Sans Mono for Powerline
 XTerm*faceSize: 10
 
 ! VT Font Menu: Unreadable

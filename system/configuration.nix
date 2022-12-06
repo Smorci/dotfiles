@@ -10,9 +10,14 @@
       ./hardware-configuration.nix
     ];
 
+	virtualisation.docker.enable = true;
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+	# Enable flakes
+	nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Set your time zone.
   time.timeZone = "Europe/Bucharest";
@@ -78,7 +83,7 @@
   users.users.marci = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = [ "wheel" "networkmanager" "audio" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "networkmanager" "audio" "docker" ]; # Enable ‘sudo’ for the user.
   };
 
   # List packages installed in system profile. To search, run:
@@ -94,6 +99,7 @@
     xtermcontrol
     arandr
     wirelesstools
+    docker
   ];
   environment.shells = with pkgs; [ zsh ];
 
@@ -119,6 +125,7 @@
       ubuntu_font_family
       font-awesome_5
       iosevka
+      powerline-fonts
     ];
   };
 
