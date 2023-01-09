@@ -15,6 +15,7 @@
     gpg.enable = true;
     zsh = {
    	  enable = true;
+   	  enableCompletion = true;
 		  shellAliases = {
 		    ll = "ls -l";
 		  };
@@ -26,8 +27,10 @@
 			  enable = true;
 			  plugins = [ 
 			  	"git"
+			  	"z"
 			  ];
-			  theme = "agnoster";
+			  custom = "$HOME/.oh-my-custom";
+			  theme = "agnoster-nix";
 			};
 			plugins = [			    
 	      {
@@ -98,6 +101,7 @@
     notion-app-enhanced
     direnv
     nix-direnv
+    ripgrep
     ];
 
   # gtk = {
