@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      <agenix/modules/age.nix>
     ];
 
 	virtualisation.docker.enable = true;
@@ -15,9 +16,11 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
 	# Enable flakes
 	nix.settings.experimental-features = [ "nix-command" "flakes" ];
+	nix.maxJobs = "auto";
 
   # Set your time zone.
   time.timeZone = "Europe/Bucharest";
@@ -91,6 +94,7 @@
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
+    git
     firefox
     mpv
     feh
@@ -100,6 +104,8 @@
     arandr
     wirelesstools
     docker
+    nixos-option
+    (pkgs.callPackage <agenix/pkgs/agenix.nix> {})
   ];
   environment.shells = with pkgs; [ zsh ];
 

@@ -61,6 +61,8 @@
   services.gpg-agent = {
     enable = true;
     pinentryFlavor = "qt";
+    defaultCacheTtl = 28800;
+    maxCacheTtl = 30000;
   };
 
 	home.sessionVariables = {
@@ -68,8 +70,13 @@
 	};
 
   home.packages = with pkgs; [
-    git
     git-crypt
+    jq
+    awscli
+    kubectl
+    kubectx
+    kubernetes-helm
+    age
     gnupg
     pinentry_qt
     slack
@@ -102,6 +109,7 @@
     direnv
     nix-direnv
     ripgrep
+    terraform
     ];
 
   # gtk = {
