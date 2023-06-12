@@ -8,53 +8,51 @@
   # paths it should manage.
   home.username = "marci";
   home.homeDirectory = "/home/marci";
- 
+
   nixpkgs.config.allowUnfree = true;
 
   programs = {
     gpg.enable = true;
+    go.enable = true;
     zsh = {
-   	  enable = true;
-   	  enableCompletion = true;
-		  shellAliases = {
-		    ll = "ls -l";
-		  };
-		  history = {
-		    size = 10000;
-		    path = "${config.xdg.dataHome}/zsh/history";
-		  };
-	    oh-my-zsh = {
-			  enable = true;
-			  plugins = [ 
-			  	"git"
-			  	"z"
-			  ];
-			  custom = "$HOME/.oh-my-custom";
-			  theme = "agnoster-nix";
-			};
-			plugins = [			    
-	      {
-	        name = "zsh-nix-shell";
-	        file = "nix-shell.plugin.zsh";
-	        src = pkgs.fetchFromGitHub {
-	          owner = "chisui";
-	          repo = "zsh-nix-shell";
-	          rev = "v0.5.0";
-	          sha256 = "0za4aiwwrlawnia4f29msk822rj9bgcygw6a8a6iikiwzjjz0g91";
-	        };
-	      }
-   		];
-			initExtra = ''
-				eval "$(direnv hook zsh)"
-				DEFAULT_USER=$USER
-			'';
+      enable = true;
+      enableCompletion = true;
+      shellAliases = {
+        ll = "ls -l";
+        k = "kubectl";
+        kx = "kubectx";
+        kns = "kubens";
+        v = "vim";
+      };
+      history = {
+        size = 10000;
+        path = "${config.xdg.dataHome}/zsh/history";
+      };
+      oh-my-zsh = {
+        enable = true;
+        plugins = [ "git" "z" ];
+        custom = "$HOME/.oh-my-custom";
+        theme = "agnoster-nix";
+      };
+      plugins = [{
+        name = "zsh-nix-shell";
+        file = "nix-shell.plugin.zsh";
+        src = pkgs.fetchFromGitHub {
+          owner = "chisui";
+          repo = "zsh-nix-shell";
+          rev = "v0.5.0";
+          sha256 = "0za4aiwwrlawnia4f29msk822rj9bgcygw6a8a6iikiwzjjz0g91";
+        };
+      }];
+      initExtra =
+        "	eval \"$(direnv hook zsh)\"\n	DEFAULT_USER=$USER\n	pr () {\n		gh pr create --assignee \"@me\" --reviewer kaozenn,simisimis,michal0mina --fill \"$@\"\n	}\n";
     };
     direnv = {
-    	enable = true;
-    	nix-direnv = {
-    		enable = true;
-    		enableFlakes = true;
-    	};
+      enable = true;
+      nix-direnv = {
+        enable = true;
+        enableFlakes = true;
+      };
     };
   };
 
@@ -65,12 +63,14 @@
     maxCacheTtl = 30000;
   };
 
-	home.sessionVariables = {
-		EDITOR = "codium";
-	};
+  home.sessionVariables = { EDITOR = "vim"; };
 
   home.packages = with pkgs; [
     git-crypt
+    bat
+    firefox
+    helmfile
+    github-cli
     jq
     awscli
     kubectl
@@ -90,7 +90,6 @@
     arandr
     xorg.xmodmap
     transmission-gtk
-    nodejs
     flameshot
     keepass
     tdesktop
@@ -110,16 +109,8 @@
     nix-direnv
     ripgrep
     terraform
-    ];
-
-  # gtk = {
-  #   enable = true;
-  #   font.name = "source-code-pro 9";
-  #   theme = {
-  #     name = "Juno-Theme";
-  #     package = pkgs.juno-theme;
-  #   };
-  # };
+    kubeconform
+  ];
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
