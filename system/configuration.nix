@@ -20,7 +20,7 @@
 
 	# Enable flakes
 	nix.settings.experimental-features = [ "nix-command" "flakes" ];
-	nix.maxJobs = "auto";
+	nix.settings.max-jobs = "auto";
 
   # Set your time zone.
   time.timeZone = "Europe/Bucharest";
