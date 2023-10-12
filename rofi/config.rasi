@@ -55,7 +55,7 @@ configuration {
 /*	window-format: "{w}    {c}   {t}";*/
 /*	click-to-exit: true;*/
 /*	show-match: true;*/
-	theme: "/nix/store/kgqlanfxwqsvlpxbnr9sxqkymk15fr20-rofi-unwrapped-1.7.5/share/rofi/themes/gruvbox-dark-soft.rasi";
+	theme: "/nix/store/fisq6q2628x15k709091s6xidlvv7q7l-rofi-unwrapped-1.7.5/share/rofi/themes/gruvbox-dark-soft.rasi";
 /*	color-normal: ;*/
 /*	color-urgent: ;*/
 /*	color-active: #02d1c6; */ 

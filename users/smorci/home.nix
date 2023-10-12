@@ -1,29 +1,79 @@
 { config, pkgs, ... }:
 
-{
+let secrets = import ./secrets/mina.nix;
+in {
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
-  home.username = "marci";
-  home.homeDirectory = "/home/marci";
+  home.username = "smorci";
+  home.homeDirectory = "/home/smorci";
 
   nixpkgs.config.allowUnfree = true;
 
   programs = {
     gpg.enable = true;
     go.enable = true;
+    neovim = {
+      enable = true;
+      defaultEditor = true;
+      plugins = with pkgs.vimPlugins; [
+        vim-json
+        vim-go
+        vim-nix
+        vim-terraform
+        vim-markdown
+
+        nvim-lspconfig
+        lsp-status-nvim
+        nvim-cmp
+        cmp-buffer
+        cmp-nvim-lsp
+        cmp-path
+        cmp-treesitter
+        cmp-vsnip
+
+        nerdtree
+        vim-gitgutter
+        vim-commentary
+        vim-airline
+        fugitive
+        vim-surround
+        oceanic-next
+        nvim-treesitter
+        nvim-lspconfig
+        vim-yaml
+      ];
+      extraConfig = ''
+        syntax enable
+
+        set ignorecase
+        set number
+        set expandtab
+        set tabstop=2
+        set shiftwidth=2
+
+        if (has("termguicolors"))
+          set termguicolors
+        endif
+
+        colorscheme OceanicNext
+        autocmd BufWritePre <buffer> lua vim.lsp.buf.format()
+      '';
+    };
     zsh = {
       enable = true;
       enableCompletion = true;
       shellAliases = {
-        ll = "ls -l";
+        ll = "ls -al";
         k = "kubectl";
         kx = "kubectx";
         kns = "kubens";
-        v = "vim";
+        v = "nvim";
       };
+      localVariables = { JIRA_API_TOKEN = secrets.apiKeys.jira; };
       history = {
         size = 10000;
         path = "${config.xdg.dataHome}/zsh/history";
@@ -49,9 +99,7 @@
     };
     direnv = {
       enable = true;
-      nix-direnv = {
-        enable = true;
-      };
+      nix-direnv = { enable = true; };
     };
   };
 
@@ -62,13 +110,15 @@
     maxCacheTtl = 30000;
   };
 
-  home.sessionVariables = { EDITOR = "vim"; };
-
   home.packages = with pkgs; [
+    nix-output-monitor
     git-crypt
     bat
     firefox
     helmfile
+    jira-cli-go
+    yarn
+    _1password-gui
     github-cli
     jq
     awscli
@@ -76,6 +126,8 @@
     kubectx
     kubernetes-helm
     age
+    obs-studio
+    gnumake
     gnupg
     pinentry_qt
     slack
@@ -109,6 +161,7 @@
     ripgrep
     terraform
     kubeconform
+    nodejs_18
   ];
 
   # This value determines the Home Manager release that your

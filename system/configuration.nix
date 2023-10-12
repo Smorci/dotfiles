@@ -8,7 +8,6 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      <agenix/modules/age.nix>
     ];
 
 	virtualisation.docker.enable = true;
@@ -29,8 +28,8 @@
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
   networking.useDHCP = false;
-  networking.interfaces.wlp2s0.useDHCP = true;
-  networking.hostName = "smorc"; # Define your hostname.
+  networking.interfaces.wlp0s20f3.useDHCP = true;
+  networking.hostName = "smorci"; # Define your hostname.
   networking.networkmanager.enable = true;
 
   # Enable sound.
@@ -65,7 +64,7 @@
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.marci = {
+  users.users.smorci = {
     isNormalUser = true;
     shell = pkgs.zsh;
     extraGroups = [ "wheel" "networkmanager" "audio" "docker" ]; # Enable ‘sudo’ for the user.
@@ -73,6 +72,7 @@
 
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [
+    pavucontrol
     vim
     wget
     git
@@ -85,27 +85,20 @@
     wirelesstools
     docker
     nixos-option
-    (pkgs.callPackage <agenix/pkgs/agenix.nix> {})
   ];
   environment.shells = with pkgs; [ zsh ];
 
   fonts = {
     enableDefaultFonts = true;
     fonts = with pkgs; [
+      (nerdfonts.override { fonts = [ "SourceCodePro" "FiraMono" "FiraCode"]; })
       carlito
       corefonts
-      fira
-      fira-code
-      fira-code-symbols
-      fira-mono
       hasklig
       mononoki
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
-      source-code-pro
-      source-sans-pro
-      source-serif-pro
       terminus_font
       terminus_font_ttf
       ubuntu_font_family

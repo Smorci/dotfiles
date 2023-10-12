@@ -202,7 +202,7 @@ exec firefox
 # X database utility 
 exec_always xrdb -load ~/.dotfiles/xresources/.Xresources
 # Wallpaper
-exec_always feh --bg-scale /home/marci/pictures/minimal-wallpaper.jpg
+exec_always feh --bg-scale /home/smorci/pictures/minimal-wallpaper.jpg
 
 set $bg-color 	         #1f5563
 set $inactive-bg-color   #002b36
