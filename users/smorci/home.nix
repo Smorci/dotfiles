@@ -12,7 +12,7 @@ in {
   home.homeDirectory = "/home/smorci";
 
   nixpkgs.config.allowUnfree = true;
-
+  
   programs = {
     gpg.enable = true;
     go.enable = true;
@@ -72,8 +72,8 @@ in {
         kx = "kubectx";
         kns = "kubens";
         v = "nvim";
+        switcharoo = "sudo nixos-rebuild switch";
       };
-      localVariables = { JIRA_API_TOKEN = secrets.apiKeys.jira; };
       history = {
         size = 10000;
         path = "${config.xdg.dataHome}/zsh/history";
@@ -94,8 +94,25 @@ in {
           sha256 = "0za4aiwwrlawnia4f29msk822rj9bgcygw6a8a6iikiwzjjz0g91";
         };
       }];
-      initExtra =
-        "	eval \"$(direnv hook zsh)\"\n	DEFAULT_USER=$USER\n	pr () {\n		gh pr create --assignee \"@me\" --reviewer kaozenn,simisimis,michal0mina --fill \"$@\"\n	}\n";
+      initExtra = ''
+        DEFAULT_USER=$USER
+        pr () { 
+          gh pr create --assignee "@me" --reviewer kaozenn,simisimis,michal0mina --fill "$@"
+        }
+        todo () {
+          local description="$*" # get all arguments
+          jira issue create --template ~/.config/.jira/issue-template.yml \
+            -a $(jira me) \
+            -tTask \
+            --custom team=4df12a6f-710c-4bc9-a8e9-a8a77b54567d \
+            --component="DevOps" \
+            --summary "$description"
+          issuekey=$(jira issue list --assignee $(jira me) | awk -F '\t' -v desc="$description" '$3 == desc { print $2 }')
+          sprintnr=$(jira sprint list --state=active --plain --table --columns id --no-headers)
+          jira sprint add $sprintnr $issuekey
+        }
+        export JIRA_API_TOKEN=${secrets.apiKeys.jira}
+      '';
     };
     direnv = {
       enable = true;
@@ -113,7 +130,9 @@ in {
   home.packages = with pkgs; [
     nix-output-monitor
     git-crypt
+    pavucontrol
     bat
+    pciutils
     firefox
     helmfile
     jira-cli-go
@@ -129,8 +148,7 @@ in {
     obs-studio
     gnumake
     gnupg
-    pinentry_qt
-    slack
+    pinentry-qt
     lxappearance
     rofi
     dpkg
@@ -162,6 +180,7 @@ in {
     terraform
     kubeconform
     nodejs_18
+    htop
   ];
 
   # This value determines the Home Manager release that your

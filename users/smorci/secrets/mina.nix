@@ -2,6 +2,6 @@
 # Always encrypt this (git-crypt)
 {
   apiKeys = {
-    jira = "ATATT3xFfGF04gVeM_QGbNpnQeC-7sdTmd-dgqJ7MCx3Yl7poP9YTniFGu5_ILW-3ziNBasBxjVXY16BxLaqa7EEJPaZRobDDVOBxUih4qAhEXp5avbKs2mCopZKnBxaSFrMA37n07lRUIoZQshORRotDGnZFlF9t5N2QjZFBg96Z78cxZu9uW8=49F918C6";
+    jira = "ATATT3xFfGF0c_KP7leIueZj9FrH5hZA7c_HuTWrI-rcbVT3Z23K2m6NmYyxwhkx0aJXrSnpMJw5VcJzwRWxG79dILyiEce014EVVolAZGD51T3UUHhqhlZbhRcjZy5eY8ECxaVj1mAIzQxSDnenmrv_DenR8zZQfaoZuUiObQ_kodXlxeNYOog=8D7D2F74";
   };
 }

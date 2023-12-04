@@ -22,7 +22,7 @@
 	nix.settings.max-jobs = "auto";
 
   # Set your time zone.
-  time.timeZone = "Europe/Bucharest";
+  time.timeZone = "Europe/Lisbon";
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
@@ -33,17 +33,35 @@
   networking.networkmanager.enable = true;
 
   # Enable sound.
-   sound.enable = true;
-   hardware.pulseaudio.enable = true;
-   hardware.bluetooth.enable = true;
+  sound.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    # If you want to use JACK applications, uncomment this
+    #jack.enable = true;
+  };
 
-   services.blueman.enable = true;
+  hardware.bluetooth.enable = true;
+  hardware.opengl.driSupport32Bit = true; # Enables support for 32bit libs that steam uses
+
+  services.blueman.enable = true;
+
+  services.logind.extraConfig = ''
+    HandlePowerKey=ignore
+  '';
 
   # Enable the X11 windowing system.
   # Enable touchpad support (enabled default in most desktopManager).
   services = {
     xserver = {
       enable = true;
+      videoDrivers = [ "intel" ];
+      deviceSection = ''
+        Option "TearFree" "true"
+      '';
       libinput = {
         enable = true;
         touchpad.naturalScrolling = true;
@@ -57,9 +75,6 @@
       };
       layout = "us,hu";
       xkbOptions = "grp:alt_shift_toggle";
-      deviceSection = ''
-        Option "TearFree" "true"
-      '';
     };
   };
 
@@ -77,6 +92,7 @@
     wget
     git
     mpv
+    xorg.xev
     feh
     vscodium
     xcalib
@@ -110,7 +126,15 @@
 
   nixpkgs.config.allowUnfree = true;
 
-	programs.zsh.enable = true;
+  programs = {
+    zsh.enable = true;
+    steam = {
+      enable = true;
+      remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+      dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    };
+  };
+
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
