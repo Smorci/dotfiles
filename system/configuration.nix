@@ -5,57 +5,80 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
-	virtualisation.docker.enable = true;
-
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
-	# Enable flakes
-	nix.settings.experimental-features = [ "nix-command" "flakes" ];
-	nix.settings.max-jobs = "auto";
+  hardware = {
+    bluetooth.enable = true;
+    
+    opengl.driSupport32Bit = true; # Enables support for 32bit libs that steam uses
+    
+    ledger.enable = true;
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/Lisbon";
 
+  # Enable sound.
+  sound.enable = false;
+
+  # Use the systemd-boot EFI boot loader.
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+
+    kernelPackages = pkgs.linuxPackages_latest;
+  };
+
+  # Enable flakes
+  nix = {
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      max-jobs = "auto";
+    };
+  };
+
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
-  networking.useDHCP = false;
-  networking.interfaces.wlp0s20f3.useDHCP = true;
-  networking.hostName = "smorci"; # Define your hostname.
-  networking.networkmanager.enable = true;
+  networking = {
+    useDHCP = false;
 
-  # Enable sound.
-  sound.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
+    interfaces.wlp0s20f3.useDHCP = true;
+
+    hostName = "smorci"; # Define your hostname.
+
+    networkmanager.enable = true;
   };
 
-  hardware.bluetooth.enable = true;
-  hardware.opengl.driSupport32Bit = true; # Enables support for 32bit libs that steam uses
-
-  services.blueman.enable = true;
-
-  services.logind.extraConfig = ''
-    HandlePowerKey=ignore
-  '';
+  security.rtkit.enable = true;
 
   # Enable the X11 windowing system.
   # Enable touchpad support (enabled default in most desktopManager).
   services = {
+
+    # Bluetooth manager
+    blueman.enable = true;
+
+    logind.extraConfig = ''
+      HandlePowerKey=ignore
+    '';
+
+    # Enable the OpenSSH daemon.
+    openssh.enable = true;
+    
+    pipewire = {
+      enable = true;
+      alsa = { 
+        enable = true;
+        support32Bit = true;
+      };
+      pulse.enable = true;
+    };
+
     xserver = {
       enable = true;
       videoDrivers = [ "intel" ];
@@ -67,12 +90,12 @@
         touchpad.naturalScrolling = true;
       };
       windowManager = {
-        i3.enable = true;
-	      i3.extraPackages = with pkgs; [ i3status dmenu i3lock-fancy];
+        i3 = {
+          enable = true;
+          extraPackages = with pkgs; [ i3status dmenu i3lock-fancy ];
+        };
       };
-      displayManager = {
-	      sddm.enable = true;
-      };
+      displayManager = { sddm.enable = true; };
       layout = "us,hu";
       xkbOptions = "grp:alt_shift_toggle";
     };
@@ -82,32 +105,42 @@
   users.users.smorci = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = [ "wheel" "networkmanager" "audio" "docker" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "audio"
+      "docker"
+      "plugdev"
+    ]; # Enable ‘sudo’ for the user.
   };
 
   # List packages installed in system profile. To search, run:
-  environment.systemPackages = with pkgs; [
-    pavucontrol
-    vim
-    wget
-    git
-    mpv
-    xorg.xev
-    feh
-    vscodium
-    xcalib
-    xtermcontrol
-    arandr
-    wirelesstools
-    docker
-    nixos-option
-  ];
-  environment.shells = with pkgs; [ zsh ];
+  environment = {
+    systemPackages = with pkgs; [
+      pavucontrol
+      vim
+      wget
+      git
+      mpv
+      xorg.xev
+      feh
+      vscodium
+      xcalib
+      xtermcontrol
+      arandr
+      wirelesstools
+      docker
+      nixos-option
+    ];
+    shells = with pkgs; [ zsh ];
+  };
 
   fonts = {
-    enableDefaultFonts = true;
-    fonts = with pkgs; [
-      (nerdfonts.override { fonts = [ "SourceCodePro" "FiraMono" "FiraCode"]; })
+    enableDefaultPackages = true;
+    packages = with pkgs; [
+      (nerdfonts.override {
+        fonts = [ "SourceCodePro" "FiraMono" "FiraCode" ];
+      })
       carlito
       corefonts
       hasklig
@@ -130,14 +163,15 @@
     zsh.enable = true;
     steam = {
       enable = true;
-      remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-      dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+      remotePlay.openFirewall =
+        true; # Open ports in the firewall for Steam Remote Play
+      dedicatedServer.openFirewall =
+        true; # Open ports in the firewall for Source Dedicated Server
     };
   };
 
 
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  virtualisation.docker.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

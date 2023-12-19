@@ -3,19 +3,29 @@
 let secrets = import ./secrets/mina.nix;
 in {
 
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
-
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
-  home.username = "smorci";
-  home.homeDirectory = "/home/smorci";
+  home = {
+    username = "smorci";
+    homeDirectory = "/home/smorci";
+  };
 
-  nixpkgs.config.allowUnfree = true;
-  
+  nixpkgs.config = {
+    allowUnfree = true;
+
+    chromium = {
+      enablePepperFlash = true;
+    };
+  };
+
   programs = {
+    # Let Home Manager install and manage itself.
+    home-manager.enable = true;
+
     gpg.enable = true;
+
     go.enable = true;
+    
     neovim = {
       enable = true;
       defaultEditor = true;
@@ -46,6 +56,7 @@ in {
         nvim-lspconfig
         vim-yaml
       ];
+
       extraConfig = ''
         syntax enable
 
@@ -63,6 +74,7 @@ in {
         autocmd BufWritePre <buffer> lua vim.lsp.buf.format()
       '';
     };
+
     zsh = {
       enable = true;
       enableCompletion = true;
@@ -97,12 +109,11 @@ in {
       initExtra = ''
         DEFAULT_USER=$USER
         pr () { 
-          gh pr create --assignee "@me" --reviewer kaozenn,simisimis,michal0mina --fill "$@"
+          gh pr create --assignee "@me" --reviewer kaozenn,simisimis --fill "$@"
         }
         todo () {
           local description="$*" # get all arguments
           jira issue create --template ~/.config/.jira/issue-template.yml \
-            -a $(jira me) \
             -tTask \
             --custom team=4df12a6f-710c-4bc9-a8e9-a8a77b54567d \
             --component="DevOps" \
@@ -120,15 +131,20 @@ in {
     };
   };
 
-  services.gpg-agent = {
-    enable = true;
-    pinentryFlavor = "qt";
-    defaultCacheTtl = 28800;
-    maxCacheTtl = 30000;
+  services = {
+
+    gpg-agent = {
+      enable = true;
+      pinentryFlavor = "qt";
+      defaultCacheTtl = 28800;
+      maxCacheTtl = 30000;
+    };
   };
 
   home.packages = with pkgs; [
     nix-output-monitor
+    nixpkgs-fmt
+    ledger-live-desktop
     git-crypt
     pavucontrol
     bat
@@ -157,6 +173,7 @@ in {
     coreutils
     discord
     arandr
+    brave
     xorg.xmodmap
     transmission-gtk
     flameshot
@@ -182,6 +199,7 @@ in {
     nodejs_18
     htop
   ];
+
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
