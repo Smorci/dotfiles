@@ -131,6 +131,7 @@
       wirelesstools
       docker
       nixos-option
+      inetutils
     ];
     shells = with pkgs; [ zsh ];
   };
