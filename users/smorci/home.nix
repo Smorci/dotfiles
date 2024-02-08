@@ -1,8 +1,9 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
-let secrets = import ./secrets/mina.nix;
+let 
+  secrets = import ./secrets/mina.nix;
+  userNeovim = import ./nvim/nvim.nix;
 in {
-
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home = {
@@ -12,10 +13,6 @@ in {
 
   nixpkgs.config = {
     allowUnfree = true;
-
-    chromium = {
-      enablePepperFlash = true;
-    };
   };
 
   programs = {
@@ -26,53 +23,53 @@ in {
 
     go.enable = true;
     
-    neovim = {
-      enable = true;
-      defaultEditor = true;
-      plugins = with pkgs.vimPlugins; [
-        vim-json
-        vim-go
-        vim-nix
-        vim-terraform
-        vim-markdown
+    neovim = userNeovim pkgs;
 
-        nvim-lspconfig
-        lsp-status-nvim
-        nvim-cmp
-        cmp-buffer
-        cmp-nvim-lsp
-        cmp-path
-        cmp-treesitter
-        cmp-vsnip
+    starship  = {
+        enable = true;
+        enableZshIntegration = true;
+        settings = {
+            add_newline = false;
+            format = lib.concatStrings [
+                "$shlvl"
+                "$shell"
+                "$nix_shell"
+                "$directory"
+                "$git_branch"
+                "$git_commit"
+                "$git_state"
+                "$git_metrics"
+                "$git_status"
+                "$direnv"
+                "$kubernetes"
+                "$line_break"
+                "$character"
+            ];
 
-        nerdtree
-        vim-gitgutter
-        vim-commentary
-        vim-airline
-        fugitive
-        vim-surround
-        oceanic-next
-        nvim-treesitter
-        nvim-lspconfig
-        vim-yaml
-      ];
+            palette = "everforest";
 
-      extraConfig = ''
-        syntax enable
+            palettes = {
+                everforest = {
+                    background = "#333C43";
+                    current_line = "#3A464C";
+                    foreground = "#D3C6AA";
+                    comment = "#9DA9A0";
+                    cyan = "#7FBBB3";
+                    green = "#A7C080";
+                    orange = "#E69875";
+                    pink = "#D699B6";
+                    purple = "#BD93F9";
+                    red = "#E67E80";
+                    yellow = "#DBBC7F";
+                };
+            };
 
-        set ignorecase
-        set number
-        set expandtab
-        set tabstop=2
-        set shiftwidth=2
+#            character = {
+#                success_symbol = "[⊳] (bold yellow) ";
+#                error_symbol = "[⋫] (bold red) ";
+#            };
 
-        if (has("termguicolors"))
-          set termguicolors
-        endif
-
-        colorscheme OceanicNext
-        autocmd BufWritePre <buffer> lua vim.lsp.buf.format()
-      '';
+        };
     };
 
     zsh = {
@@ -85,6 +82,7 @@ in {
         kns = "kubens";
         v = "nvim";
         switcharoo = "sudo nixos-rebuild switch";
+        justpull = "git pull origin main --no-ff";
       };
       history = {
         size = 10000;
@@ -92,9 +90,8 @@ in {
       };
       oh-my-zsh = {
         enable = true;
-        plugins = [ "git" "z" ];
+        plugins = [ "git" "z" "ripgrep" "python" "rust" ];
         custom = "$HOME/.oh-my-custom";
-        theme = "agnoster-nix";
       };
       plugins = [{
         name = "zsh-nix-shell";
@@ -115,11 +112,15 @@ in {
           local description="$*" # get all arguments
           jira issue create --template ~/.config/.jira/issue-template.yml \
             -tTask \
+            -a $(jira me) \
             --custom team=4df12a6f-710c-4bc9-a8e9-a8a77b54567d \
             --component="DevOps" \
             --summary "$description"
-          issuekey=$(jira issue list --assignee $(jira me) | awk -F '\t' -v desc="$description" '$3 == desc { print $2 }')
-          sprintnr=$(jira sprint list --state=active --plain --table --columns id --no-headers)
+          sleep 2
+          issuekey=$(jira issue list --assignee $(jira me) | awk -F '\t' -v desc="$description" '$3 == desc { print $2 }' | tr -d ' ')
+          sprintnr=$(jira sprint list --state=active --plain --table --columns id --no-headers --component DevOps | head -n 1 | tr -d ' ')
+          echo $sprintnr
+          echo $issuekey
           jira sprint add $sprintnr $issuekey
         }
         export JIRA_API_TOKEN=${secrets.apiKeys.jira}
@@ -142,20 +143,39 @@ in {
   };
 
   home.packages = with pkgs; [
+
+    # LSP
+    rnix-lsp
+    nodePackages_latest.yaml-language-server
+    rust-analyzer
+    lua-language-server
+
+    cargo
+    stern
+    ani-cli
     nix-output-monitor
     nixpkgs-fmt
     ledger-live-desktop
+    starship
     git-crypt
     pavucontrol
     bat
+    wine
+    ani-cli
     pciutils
     firefox
+    sd
     helmfile
     jira-cli-go
     yarn
     _1password-gui
     github-cli
     jq
+    statix
+    dig
+    dnsutils
+    gawk
+    tig
     awscli
     kubectl
     kubectx
@@ -196,6 +216,7 @@ in {
     ripgrep
     terraform
     kubeconform
+    postgresql
     nodejs_18
     htop
   ];
@@ -209,5 +230,5 @@ in {
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "21.05";
+  home.stateVersion = "23.11";
 }

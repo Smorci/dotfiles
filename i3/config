@@ -119,11 +119,11 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1: System "
-set $ws2 "2: Code "
-set $ws3 "3: Code "
-set $ws4 "4: Browsing "
-set $ws5 "5: Social "
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
 set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
@@ -201,19 +201,19 @@ exec firefox
 # X database utility 
 exec_always xrdb -load ~/.dotfiles/xresources/.Xresources
 # Wallpaper
-exec_always feh --bg-scale /home/smorci/pictures/minimal-wallpaper.jpg
+exec_always feh --bg-scale /home/smorci/pictures/engineer-white.jpg
 
-set $bg-color 	         #1f5563
-set $inactive-bg-color   #002b36
-set $text-color          #c2cfd3
-set $inactive-text-color #c2cfd3
-set $urgent-bg-color     #03070a
+set $bg-color 	         #434F55
+set $inactive-bg-color   #333C43
+set $text-color          #DFECF0
+set $inactive-text-color #BFCCD0
+set $urgent-bg-color     #FF6C68
 
 # window colors
 #                       border              background         text                 indicator
 client.focused          $bg-color           $bg-color          $text-color          #00ff00
-client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color #00ff00
-client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color #00ff00
+client.unfocused        $inactive-bg-color  $inactive-bg-color $inactive-text-color #00ff00
+client.focused_inactive $inactive-bg-color  $inactive-bg-color $inactive-text-color #00ff00
 client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          #00ff00
 
 # Start i3bar to display a workspace bar (plus the system information i3status

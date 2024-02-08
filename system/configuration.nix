@@ -12,7 +12,19 @@
   hardware = {
     bluetooth.enable = true;
     
-    opengl.driSupport32Bit = true; # Enables support for 32bit libs that steam uses
+    opengl = {
+      enable = true; # xserver enables this by default
+      extraPackages = with pkgs; [
+        intel-gmmlib
+        intel-media-driver
+        intel-ocl
+        libvdpau-va-gl
+        vaapiIntel
+        vaapiVdpau
+      ];
+      driSupport = true;
+      driSupport32Bit = true; # Enables support for 32bit libs that steam uses
+    };
     
     ledger.enable = true;
   };
@@ -81,7 +93,7 @@
 
     xserver = {
       enable = true;
-      videoDrivers = [ "intel" ];
+      videoDrivers = [ "mesa" "intel" ];
       deviceSection = ''
         Option "TearFree" "true"
       '';
@@ -180,7 +192,7 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "21.05"; # Did you read the comment?
+  system.stateVersion = "23.11"; # Did you read the comment?
 
 }
 

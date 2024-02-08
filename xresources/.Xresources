@@ -166,50 +166,70 @@ XTerm*on3Clicks: regex ([[:alpha:]]+://)?([[:alnum:]!#+,./=?@_~-]|(%[[:xdigit:]]
 !####################
 ! http://web.archive.org/web/20090130061234/http://phraktured.net/terminal-colors/
 
+! Dracula Xresources palette
+*.foreground: #D3C6AA
+*.background: #2D353B
+*.color0:     #4D4D4D
+*.color8:     #7A8478
+*.color1:     #E67E80
+*.color9:     #EEA9AA
+*.color2:     #A7C080
+*.color10:    #83C092
+*.color3:     #DBBC7F
+*.color11:    #E6D1A7
+*.color4:     #E69875
+*.color12:    #F7A884
+*.color5:     #D699B6
+*.color13:    #E5BDD0
+*.color6:     #CDF6FF
+*.color14:    #E7FBFF
+*.color7:     #BFBFBF
+*.color15:    #E6E6E6
+
 !-------- Theme: Solarized {{{
 !------------------------------------------------------
 
 !!Source http://github.com/altercation/solarized
 
-*background: #002b36
-*foreground: #c2cfd3
-!!*fading: 40
-*fadeColor: #002b36
-*cursorColor: #93a1a1
-*pointerColorBackground: #586e75
-*pointerColorForeground: #93a1a1
-
-!! black dark/light
-*color0: #073642
-*color8: #002b36
-
-!! red dark/light
-*color1: #dc322f
-*color9: #cb4b16
-
-!! green dark/light
-*color2: #859900
-*color10: #586e75
-
-!! yellow dark/light
-*color3: #b58900
-*color11: #657b83
-
-!! blue dark/light
-*color4: #268bd2
-*color12: #839496
-
-!! magenta dark/light
-*color5: #d33682
-*color13: #6c71c4
-
-!! cyan dark/light
-*color6: #2aa198
-*color14: #93a1a1
-
-!! white dark/light
-*color7: #eee8d5
-*color15: #fdf6e3
+!*background: #002b36
+!*foreground: #c2cfd3
+!!!*fading: 40
+!*fadeColor: #002b36
+!*cursorColor: #93a1a1
+!*pointerColorBackground: #586e75
+!*pointerColorForeground: #93a1a1
+!
+!!! black dark/light
+!*color0: #073642
+!*color8: #002b36
+!
+!!! red dark/light
+!*color1: #dc322f
+!*color9: #cb4b16
+!
+!!! green dark/light
+!*color2: #859900
+!*color10: #586e75
+!
+!!! yellow dark/light
+!*color3: #b58900
+!*color11: #657b83
+!
+!!! blue dark/light
+!*color4: #268bd2
+!*color12: #839496
+!
+!!! magenta dark/light
+!*color5: #d33682
+!*color13: #6c71c4
+!
+!!! cyan dark/light
+!*color6: #2aa198
+!*color14: #93a1a1
+!
+!!! white dark/light
+!*color7: #eee8d5
+!*color15: #fdf6e3
 
 ! }}}
 ! !-------- Theme: Rezza {{{
