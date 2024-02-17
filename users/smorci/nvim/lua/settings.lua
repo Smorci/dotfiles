@@ -3,6 +3,7 @@ local g = vim.g
 
 -- Autocmds
 vim.cmd [[
+
 augroup CursorLine
     au!
     au VimEnter * setlocal cursorline
@@ -11,7 +12,11 @@ augroup CursorLine
     au WinLeave * setlocal nocursorline
 augroup END
 
-autocmd FileType nix setlocal shiftwidth=4
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType yaml let g:indentLine_enabled = 1
+autocmd FileType yaml let g:indentLine_char = '┆'
+
+autocmd FocusLost * silent update
 
 ]]
 
@@ -54,6 +59,7 @@ o.undofile = true
 
 -- Indentation
 o.smartindent = true
+g.indentLine_enabled = 0
 o.tabstop = 2
 o.shiftwidth = 2
 o.shiftround = true
@@ -76,6 +82,7 @@ o.viminfo = ""
 o.viminfofile = "NONE"
 
 -- Miscellaneous quality of life
+o.updatetime = 2500
 o.ignorecase = true
 o.ttimeoutlen = 5
 o.hidden = true
@@ -235,8 +242,4 @@ lspconfig.lua_ls.setup {
        },
      }
    }
-}
-
-lspconfig.yamlls.setup{
-  capabilities = capabilities
 }

@@ -117,10 +117,8 @@ in {
             --component="DevOps" \
             --summary "$description"
           sleep 2
-          issuekey=$(jira issue list --assignee $(jira me) | awk -F '\t' -v desc="$description" '$3 == desc { print $2 }' | tr -d ' ')
+          issuekey=$(jira issue list --assignee $(jira me) | choose 1 | head -n 2 | tail -n 1 | tr -d ' ')
           sprintnr=$(jira sprint list --state=active --plain --table --columns id --no-headers --component DevOps | head -n 1 | tr -d ' ')
-          echo $sprintnr
-          echo $issuekey
           jira sprint add $sprintnr $issuekey
         }
         export JIRA_API_TOKEN=${secrets.apiKeys.jira}
@@ -146,13 +144,13 @@ in {
 
     # LSP
     rnix-lsp
-    nodePackages_latest.yaml-language-server
     rust-analyzer
     lua-language-server
 
     cargo
     stern
     ani-cli
+    choose
     nix-output-monitor
     nixpkgs-fmt
     ledger-live-desktop

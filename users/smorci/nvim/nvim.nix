@@ -5,7 +5,7 @@ pkgs:
   defaultEditor = true;
 
   plugins = with pkgs.vimPlugins; [
-
+    
     # Syntax and language specific
     vim-json
     vim-go
@@ -17,7 +17,6 @@ pkgs:
     # LSP
     nvim-lspconfig
     lsp-status-nvim
-    lazy-lsp-nvim
 
     # Autocomplete
     nvim-cmp
@@ -38,10 +37,11 @@ pkgs:
     vim-surround
     nvim-treesitter
     telescope-nvim
+    indentLine
 
     # Colorscheme
     everforest
-  ];
+ ];
 
   extraConfig = ''
         luafile ~/.dotfiles/users/smorci/nvim/lua/settings.lua
