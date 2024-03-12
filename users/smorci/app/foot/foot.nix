@@ -1,4 +1,4 @@
-pkgs: 
+pkgs:
 {
   enable = true;
   settings = {
@@ -24,14 +24,14 @@ pkgs:
       foreground = "D3C6AA";
       flash = "3A464C";
       # Regular colors
-      regular0 = "1B1916";  # black
-      regular1 = "E67E80";  # red
-      regular2 = "A7C080";  # green
-      regular3 = "DBBC7F";  # yellow
-      regular4 = "BD93F9";  # purple
-      regular5 = "E69875";  # orange
-      regular6 = "7FBBB3";  # cyan
-      regular7 = "C7C5C0";  # white
+      regular0 = "1B1916"; # black
+      regular1 = "E67E80"; # red
+      regular2 = "A7C080"; # green
+      regular3 = "DBBC7F"; # yellow
+      regular4 = "BD93F9"; # purple
+      regular5 = "E69875"; # orange
+      regular6 = "7FBBB3"; # cyan
+      regular7 = "C7C5C0"; # white
 
     };
   };

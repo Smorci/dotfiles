@@ -5,7 +5,7 @@ pkgs:
   defaultEditor = true;
 
   plugins = with pkgs.vimPlugins; [
-    
+
     # Syntax and language specific
     vim-json
     vim-go
@@ -42,18 +42,18 @@ pkgs:
 
     # Colorscheme
     everforest
- ];
+  ];
 
   extraConfig = ''
-        luafile ~/.dotfiles/users/smorci/app/nvim/lua/settings.lua
+    luafile ~/.dotfiles/users/smorci/app/nvim/lua/settings.lua
 
-        function! LspStatus() abort
-          if luaeval('#vim.lsp.buf_get_clients() > 0')
-            return luaeval("require('lsp-status').status()")
-          endif
+    function! LspStatus() abort
+      if luaeval('#vim.lsp.buf_get_clients() > 0')
+        return luaeval("require('lsp-status').status()")
+      endif
 
-          return '''
-        endfunction
+      return '''
+    endfunction
 
-      '';
+  '';
 }
