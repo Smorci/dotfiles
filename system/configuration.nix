@@ -12,9 +12,23 @@
   hardware = {
     bluetooth.enable = true;
     
-    opengl.driSupport32Bit = true; # Enables support for 32bit libs that steam uses
+    opengl = {
+      enable = true; # xserver enables this by default
+      extraPackages = with pkgs; [
+        intel-gmmlib
+        intel-media-driver
+        intel-ocl
+        libvdpau-va-gl
+        vaapiIntel
+        vaapiVdpau
+      ];
+      driSupport = true;
+      driSupport32Bit = true; # Enables support for 32bit libs that steam uses
+    };
     
     ledger.enable = true;
+
+    openrazer.enable = true;
   };
 
   # Set your time zone.
@@ -54,12 +68,17 @@
     networkmanager.enable = true;
   };
 
-  security.rtkit.enable = true;
+  security = {
+    rtkit.enable = true;
+    polkit.enable = true;
+  };
 
   # Enable the X11 windowing system.
   # Enable touchpad support (enabled default in most desktopManager).
   services = {
 
+    dbus.enable = true;
+      
     # Bluetooth manager
     blueman.enable = true;
 
@@ -79,26 +98,15 @@
       pulse.enable = true;
     };
 
-    xserver = {
-      enable = true;
-      videoDrivers = [ "intel" ];
-      deviceSection = ''
-        Option "TearFree" "true"
-      '';
-      libinput = {
-        enable = true;
-        touchpad.naturalScrolling = true;
-      };
-      windowManager = {
-        i3 = {
-          enable = true;
-          extraPackages = with pkgs; [ i3status dmenu i3lock-fancy ];
-        };
-      };
-      displayManager = { sddm.enable = true; };
-      layout = "us,hu";
-      xkbOptions = "grp:alt_shift_toggle";
-    };
+    gnome.gnome-keyring.enable = true;
+
+  };
+
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    # gtk portal needed to make gtk apps happy
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -109,6 +117,8 @@
       "wheel"
       "networkmanager"
       "audio"
+      "video"
+      "openrazer"
       "docker"
       "plugdev"
     ]; # Enable ‘sudo’ for the user.
@@ -117,10 +127,25 @@
   # List packages installed in system profile. To search, run:
   environment = {
     systemPackages = with pkgs; [
+
+      # Windowing system
+      wayland
+      xdg-utils
+      wdisplays
+      mako
+        
+      # Clipboard
+      wl-clipboard
+
+      # Gsettings
+      glib
+
+      dbus
       pavucontrol
       vim
       wget
       git
+      pulseaudio
       mpv
       xorg.xev
       feh
@@ -162,6 +187,11 @@
 
   programs = {
     zsh.enable = true;
+    sway = {
+      enable = true;
+      wrapperFeatures.gtk = true;
+    };
+    light.enable = true;
     steam = {
       enable = true;
       remotePlay.openFirewall =
@@ -180,7 +210,7 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "21.05"; # Did you read the comment?
+  system.stateVersion = "23.11"; # Did you read the comment?
 
 }
 
