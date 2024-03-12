@@ -140,80 +140,105 @@ in
     rust-analyzer
     lua-language-server
 
+    # Editor
+    micro
+
+    # YAML
     yamlfmt
-    cargo
-    stern
-    openrazer-daemon
-    razergenie
-    ani-cli
-    choose
+
+    # Nix
     nix-output-monitor
+    nixos-option
     nixpkgs-fmt
-    ledger-live-desktop
-    starship
-    krew
-    git-crypt
-    pavucontrol
-    bat
-    wine
-    ani-cli
-    pciutils
-    firefox
-    sd
-    helmfile
-    jira-cli-go
-    yarn
-    _1password-gui
-    github-cli
-    jq
     statix
-    dig
-    dnsutils
-    gawk
-    tig
-    awscli
+
+    # Rust
+    cargo
+
+    # Helm
+    helmfile
+    kubernetes-helm
+
+    # Kubernetes
     kubectl
     kubectx
-    kubernetes-helm
-    age
-    obs-studio
-    gnumake
+    kubeconform
+
+    # Docker
+    docker
+
+    # Terraform
+    terraform
+
+    # AWS
+    awscli
+
+    # Git
+    git-crypt
+    github-cli
+    tig
+
+    # GnuPG
     gnupg
     pinentry-qt
-    lxappearance
+
+    # DB
+    postgresql
+
+    # CLI Tools
+    stern
+    choose
+    starship
+    bat
+    pciutils
+    sd
+    jira-cli-go
+    jq
+    gawk
+    age
+    gnumake
     rofi
     dpkg
     patchelf
     binutils
     coreutils
-    discord
-    arandr
-    brave
-    xorg.xmodmap
-    transmission-gtk
-    flameshot
-    keepass
-    tdesktop
     unzip
-    aircrack-ng
-    soulseekqt
-    pcmanfm
-    micro
-    vlc
-    xclip
-    elmPackages.elm
-    libreoffice
-    nixfmt
     gnutar
-    notion-app-enhanced
     direnv
     nix-direnv
     ripgrep
-    terraform
-    kubeconform
-    postgresql
-    nodejs_18
     htop
+
+    # Desktop
+    pavucontrol
+    firefox
+    brave
+    _1password-gui
+    obs-studio
+    discord
+    transmission-gtk
+    flameshot
+    tdesktop
+    soulseekqt
+    pcmanfm
+    vlc
+    mpv
+    libreoffice
+
+    # Hardware
+    openrazer-daemon
+    razergenie
+    ledger-live-desktop
+
+    # Networking
+    krew
+    dig
+    dnsutils
+
+    # Fun
+    ani-cli
+    wine
+
   ];
 
 

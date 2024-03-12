@@ -9,10 +9,10 @@
   description = "A flake for Smorci's personal NixOS configuration";
 
   outputs = inputs@{ self, nixpkgs, home-manager, agenix, ... }: {
-   
+
     nixosConfigurations.smorci = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      modules = [ 
+      modules = [
         ./system/configuration.nix
         agenix.nixosModules.default
         home-manager.nixosModules.home-manager

@@ -5,13 +5,14 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ # Include the results of the hardware scan.
+  imports = [
+    # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
 
   hardware = {
     bluetooth.enable = true;
-    
+
     opengl = {
       enable = true; # xserver enables this by default
       extraPackages = with pkgs; [
@@ -25,7 +26,7 @@
       driSupport = true;
       driSupport32Bit = true; # Enables support for 32bit libs that steam uses
     };
-    
+
     ledger.enable = true;
 
     openrazer.enable = true;
@@ -78,7 +79,7 @@
   services = {
 
     dbus.enable = true;
-      
+
     # Bluetooth manager
     blueman.enable = true;
 
@@ -88,10 +89,10 @@
 
     # Enable the OpenSSH daemon.
     openssh.enable = true;
-    
+
     pipewire = {
       enable = true;
-      alsa = { 
+      alsa = {
         enable = true;
         support32Bit = true;
       };
@@ -133,29 +134,22 @@
       xdg-utils
       wdisplays
       mako
-        
+
       # Clipboard
       wl-clipboard
 
       # Gsettings
       glib
 
-      dbus
-      pavucontrol
+      # Editor
       vim
-      wget
+
+      # Git
       git
-      pulseaudio
-      mpv
-      xorg.xev
-      feh
-      vscodium
-      xcalib
-      xtermcontrol
-      arandr
+
+      # Utils
+      wget
       wirelesstools
-      docker
-      nixos-option
       inetutils
     ];
     shells = with pkgs; [ zsh ];
