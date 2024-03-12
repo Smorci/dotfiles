@@ -38,13 +38,14 @@ pkgs:
     nvim-treesitter
     telescope-nvim
     indentLine
+    vim-visual-multi
 
     # Colorscheme
     everforest
  ];
 
   extraConfig = ''
-        luafile ~/.dotfiles/users/smorci/nvim/lua/settings.lua
+        luafile ~/.dotfiles/users/smorci/app/nvim/lua/settings.lua
 
         function! LspStatus() abort
           if luaeval('#vim.lsp.buf_get_clients() > 0')

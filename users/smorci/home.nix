@@ -1,9 +1,13 @@
 { config, pkgs, lib, ... }:
 
-let 
-  secrets = import ./secrets/mina.nix;
-  userNeovim = import ./nvim/nvim.nix;
-in {
+let
+  userNeovim = import ./app/nvim/nvim.nix pkgs;
+  userSway = import ./app/sway/sway.nix pkgs;
+  userFoot = import ./app/foot/foot.nix pkgs;
+  userStarship = import ./app/starship/starship.nix pkgs;
+  userZsh = import ./app/zsh/zsh.nix { inherit pkgs config; };
+in
+{
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home = {
@@ -15,6 +19,9 @@ in {
     allowUnfree = true;
   };
 
+  # Wayland
+  wayland.windowManager.sway = userSway;
+
   programs = {
     # Let Home Manager install and manage itself.
     home-manager.enable = true;
@@ -22,108 +29,92 @@ in {
     gpg.enable = true;
 
     go.enable = true;
-    
-    neovim = userNeovim pkgs;
 
-    starship  = {
-        enable = true;
-        enableZshIntegration = true;
-        settings = {
-            add_newline = false;
-            format = lib.concatStrings [
-                "$shlvl"
-                "$shell"
-                "$nix_shell"
-                "$directory"
-                "$git_branch"
-                "$git_commit"
-                "$git_state"
-                "$git_metrics"
-                "$git_status"
-                "$direnv"
-                "$kubernetes"
-                "$line_break"
-                "$character"
-            ];
+    neovim = userNeovim;
 
-            palette = "everforest";
+    foot = userFoot;
 
-            palettes = {
-                everforest = {
-                    background = "#333C43";
-                    current_line = "#3A464C";
-                    foreground = "#D3C6AA";
-                    comment = "#9DA9A0";
-                    cyan = "#7FBBB3";
-                    green = "#A7C080";
-                    orange = "#E69875";
-                    pink = "#D699B6";
-                    purple = "#BD93F9";
-                    red = "#E67E80";
-                    yellow = "#DBBC7F";
-                };
-            };
+    starship = userStarship;
 
-#            character = {
-#                success_symbol = "[⊳] (bold yellow) ";
-#                error_symbol = "[⋫] (bold red) ";
-#            };
+    zsh = userZsh;
 
-        };
-    };
-
-    zsh = {
+    swaylock = {
       enable = true;
-      enableCompletion = true;
-      shellAliases = {
-        ll = "ls -al";
-        k = "kubectl";
-        kx = "kubectx";
-        kns = "kubens";
-        v = "nvim";
-        switcharoo = "sudo nixos-rebuild switch";
-        justpull = "git pull origin main --no-ff";
+      settings = {
+        daemonize = true;
+        ignore-empty-password = true;
+        hide-keyboard-layout = true;
+        line-uses-inside = true;
+        font = "Terminus";
+        indicator-radius = "128";
+        indicator-thickness = "32";
+        color = "000000";
+        separator-color = "00000000";
+        bs-hl-color = "b48ead";
+        key-hl-color = "5e81ac";
+        caps-lock-bs-hl-color = "b48ead";
+        caps-lock-key-hl-color = true;
+        inside-color = "2e344000";
+        inside-clear-color = "2e344000";
+        inside-caps-lock-color = true;
+        inside-ver-color = "2e344000";
+        inside-wrong-color = "2e344000";
+        ring-color = "4c566a";
+        ring-clear-color = "81a1c1";
+        ring-caps-lock-color = "4c566a";
+        ring-ver-color = "ebcb8b";
+        ring-wrong-color = "bf616a";
+        text-color = "ffffff00";
+        text-clear-color = "2e344000";
+        text-caps-lock-color = "4c566a";
+        text-ver-color = "2e344000";
+        text-wrong-color = "2e344000";
       };
-      history = {
-        size = 10000;
-        path = "${config.xdg.dataHome}/zsh/history";
-      };
-      oh-my-zsh = {
-        enable = true;
-        plugins = [ "git" "z" "ripgrep" "python" "rust" ];
-        custom = "$HOME/.oh-my-custom";
-      };
-      plugins = [{
-        name = "zsh-nix-shell";
-        file = "nix-shell.plugin.zsh";
-        src = pkgs.fetchFromGitHub {
-          owner = "chisui";
-          repo = "zsh-nix-shell";
-          rev = "v0.5.0";
-          sha256 = "0za4aiwwrlawnia4f29msk822rj9bgcygw6a8a6iikiwzjjz0g91";
-        };
-      }];
-      initExtra = ''
-        DEFAULT_USER=$USER
-        pr () { 
-          gh pr create --assignee "@me" --reviewer kaozenn,simisimis --fill "$@"
-        }
-        todo () {
-          local description="$*" # get all arguments
-          jira issue create --template ~/.config/.jira/issue-template.yml \
-            -tTask \
-            -a $(jira me) \
-            --custom team=4df12a6f-710c-4bc9-a8e9-a8a77b54567d \
-            --component="DevOps" \
-            --summary "$description"
-          sleep 2
-          issuekey=$(jira issue list --assignee $(jira me) | choose 1 | head -n 2 | tail -n 1 | tr -d ' ')
-          sprintnr=$(jira sprint list --state=active --plain --table --columns id --no-headers --component DevOps | head -n 1 | tr -d ' ')
-          jira sprint add $sprintnr $issuekey
-        }
-        export JIRA_API_TOKEN=${secrets.apiKeys.jira}
-      '';
     };
+
+
+    i3status-rust = {
+      enable = true;
+      bars = {
+        default = {
+          blocks = [
+            {
+              alert = 10.0;
+              block = "disk_space";
+              info_type = "available";
+              interval = 60;
+              path = "/";
+              warning = 20.0;
+            }
+            {
+              block = "memory";
+              format = " $icon mem_used_percents ";
+              format_alt = " $icon $swap_used_percents ";
+            }
+            {
+              block = "cpu";
+              interval = 1;
+            }
+            {
+              block = "load";
+              format = " $icon $1m ";
+              interval = 1;
+            }
+            {
+              block = "sound";
+            }
+            {
+              block = "time";
+              format = " $timestamp.datetime(f:'%a %d/%m %R') ";
+              interval = 60;
+            }
+          ];
+          icons = "awesome6";
+          theme = "gruvbox-light";
+        };
+      };
+    };
+
     direnv = {
       enable = true;
       nix-direnv = { enable = true; };
@@ -131,6 +122,8 @@ in {
   };
 
   services = {
+
+    swayidle.enable = true;
 
     gpg-agent = {
       enable = true;
@@ -147,14 +140,18 @@ in {
     rust-analyzer
     lua-language-server
 
+    yamlfmt
     cargo
     stern
+    openrazer-daemon
+    razergenie
     ani-cli
     choose
     nix-output-monitor
     nixpkgs-fmt
     ledger-live-desktop
     starship
+    krew
     git-crypt
     pavucontrol
     bat
