@@ -9,17 +9,13 @@ pkgs:
       repeat_rate = "32";
       xkb_layout = "us,hu,ro";
       xkb_options = "grp:switch,grp:lalt_lshift_toggle";
-    };
-    input.touchpad = {
       tap = "enabled";
-      natural_scroll = "disabled";
+      tap_button_map = "lrm";
+      middle_emulation = "enabled";
+      natural_scroll = "enabled";
     };
     menu = "rofi -show drun";
     window.hideEdgeBorders = "both";
-    startup = [
-      { command = "xrdb -load ~/.dotfiles/xresources/.Xresources"; always = true; }
-      { command = "feh --bg-scale /home/smorci/pictures/engineer-white.jpg"; always = true; }
-    ];
     colors = {
       background = "#434F55";
       focused = {
