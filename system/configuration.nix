@@ -151,6 +151,7 @@
       wget
       wirelesstools
       inetutils
+      pulseaudio
     ];
     shells = with pkgs; [ zsh ];
   };

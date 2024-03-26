@@ -32,9 +32,10 @@
     };
   }];
   initExtra = ''
+    PATH=$PATH:/home/smorci/.bin
     DEFAULT_USER=$USER
     pr () { 
-      gh pr create --assignee "@me" --reviewer kaozenn,simisimis --fill "$@"
+      gh pr create --assignee "@me" --reviewer kaozenn,simisimis,johnmarcou --fill "$@"
     }
     todo () {
       local description="$*" # get all arguments

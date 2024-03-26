@@ -57,7 +57,7 @@ in
 
     gpg-agent = {
       enable = true;
-      pinentryFlavor = "qt";
+      pinentryPackage = pkgs.pinentry-qt;
       defaultCacheTtl = 28800;
       maxCacheTtl = 30000;
     };
@@ -66,7 +66,6 @@ in
   home.packages = with pkgs; [
 
     # LSP
-    rnix-lsp
     rust-analyzer
     lua-language-server
 
@@ -100,8 +99,9 @@ in
     # Terraform
     terraform
 
-    # AWS
+    # Cloud SDKs
     awscli
+    google-cloud-sdk
 
     # Git
     git-crypt

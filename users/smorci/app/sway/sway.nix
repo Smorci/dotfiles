@@ -9,6 +9,8 @@ pkgs:
       repeat_rate = "32";
       xkb_layout = "us,hu,ro";
       xkb_options = "grp:switch,grp:lalt_lshift_toggle";
+    };
+    input."type:touchpad" = {
       tap = "enabled";
       tap_button_map = "lrm";
       middle_emulation = "enabled";
@@ -83,5 +85,8 @@ pkgs:
     bindsym XF86AudioRaiseVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ +1%'
     bindsym XF86AudioLowerVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ -1%'
     bindsym XF86AudioMute exec 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
+  '';
+  extraSessionCommands = ''
+    export SDL_VIDEODRIVER=wayland
   '';
 }

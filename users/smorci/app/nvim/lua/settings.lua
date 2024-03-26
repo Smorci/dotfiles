@@ -218,11 +218,6 @@ lsp_status.register_progress()
 local lspconfig = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-lspconfig.rnix.setup({
-on_attach = lsp_status.on_attach,
-capabilities = capabilities
-})
-
 lspconfig.rust_analyzer.setup{
 settings = {
 ['rust-analyzer'] = {
