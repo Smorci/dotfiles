@@ -9,6 +9,10 @@ let
     pactl list | grep RUNNING && exit 1
     exec systemctl suspend
   '';
+  i-suspend-unless-docker = pkgs.writeShellScriptBin "i-suspend-unless-docker" ''
+    docker ps | grep -i "Up" && exit 1
+    exec systemctl suspend
+  '';
   i-monitor-on = pkgs.writeShellScriptBin "i-monitor-on" ''
     exec swaymsg "output * dpms on"
   '';
@@ -23,6 +27,7 @@ in
       ];
       timeouts = [
         { timeout = 300; command = "${i-monitor-off-unless-audio-hdmi}/bin/i-monitor-off-unless-audio-hdmi"; resumeCommand = "${i-monitor-on}/bin/i-monitor-on"; }
+        { timeout = 600; command = "${i-suspend-unless-docker}/bin/i-suspend-unless-docker"; }
         { timeout = 600; command = "${i-suspend-unless-audio}/bin/i-suspend-unless-audio"; }
       ];
 }

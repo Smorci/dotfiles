@@ -4,6 +4,7 @@ pkgs:
   config = {
     modifier = "Mod4";
     terminal = "foot";
+    startup  = [ { command = "swayidle"; } ];
     input."*" = {
       repeat_delay = "200";
       repeat_rate = "32";
@@ -17,7 +18,10 @@ pkgs:
       natural_scroll = "enabled";
     };
     menu = "rofi -show drun";
-    window.hideEdgeBorders = "both";
+    window = {
+      titlebar = false;
+      hideEdgeBorders = "both";
+    };
     colors = {
       background = "#434F55";
       focused = {

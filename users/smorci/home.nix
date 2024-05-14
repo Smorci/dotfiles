@@ -92,21 +92,24 @@ in
     kubectl
     kubectx
     kubeconform
+    k9s
+    stern
 
     # Docker
-    docker
+    docker-compose
 
     # Terraform
     terraform
 
     # Cloud SDKs
-    awscli
+    awscli2
     google-cloud-sdk
 
     # Git
     git-crypt
     github-cli
     tig
+    pre-commit
 
     # GnuPG
     gnupg
@@ -116,7 +119,7 @@ in
     postgresql
 
     # CLI Tools
-    stern
+    tree
     choose
     starship
     bat
@@ -143,8 +146,6 @@ in
     pavucontrol
     firefox
     brave
-    _1password-gui
-    obs-studio
     discord
     transmission-gtk
     flameshot
@@ -154,6 +155,7 @@ in
     vlc
     mpv
     libreoffice
+    nomacs
 
     # Hardware
     openrazer-daemon
@@ -168,6 +170,7 @@ in
     # Fun
     ani-cli
     wine
+    mindustry-wayland
 
   ];
 
