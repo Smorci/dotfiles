@@ -4,18 +4,24 @@ pkgs:
   config = {
     modifier = "Mod4";
     terminal = "foot";
+    startup  = [ { command = "swayidle"; } ];
     input."*" = {
       repeat_delay = "200";
       repeat_rate = "32";
       xkb_layout = "us,hu,ro";
       xkb_options = "grp:switch,grp:lalt_lshift_toggle";
+    };
+    input."type:touchpad" = {
       tap = "enabled";
       tap_button_map = "lrm";
       middle_emulation = "enabled";
       natural_scroll = "enabled";
     };
     menu = "rofi -show drun";
-    window.hideEdgeBorders = "both";
+    window = {
+      titlebar = false;
+      hideEdgeBorders = "both";
+    };
     colors = {
       background = "#434F55";
       focused = {
@@ -83,5 +89,8 @@ pkgs:
     bindsym XF86AudioRaiseVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ +1%'
     bindsym XF86AudioLowerVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ -1%'
     bindsym XF86AudioMute exec 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
+  '';
+  extraSessionCommands = ''
+    export SDL_VIDEODRIVER=wayland
   '';
 }

@@ -15,12 +15,13 @@
 
     opengl = {
       enable = true; # xserver enables this by default
+      setLdLibraryPath = true;
       extraPackages = with pkgs; [
         intel-gmmlib
         intel-media-driver
         intel-ocl
+        intel-vaapi-driver
         libvdpau-va-gl
-        vaapiIntel
         vaapiVdpau
       ];
       driSupport = true;
@@ -61,6 +62,9 @@
   # replicates the default behaviour.
   networking = {
     useDHCP = false;
+
+    firewall.allowedTCPPorts = [ 6567 ];
+    firewall.allowedUDPPorts = [ 6567 ];
 
     interfaces.wlp0s20f3.useDHCP = true;
 
@@ -151,6 +155,7 @@
       wget
       wirelesstools
       inetutils
+      pulseaudio
     ];
     shells = with pkgs; [ zsh ];
   };

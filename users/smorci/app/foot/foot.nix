@@ -3,7 +3,6 @@ pkgs:
   enable = true;
   settings = {
     main = {
-      dpi-aware = "yes";
       font-size-adjustment = "1.5";
     };
     cursor = {

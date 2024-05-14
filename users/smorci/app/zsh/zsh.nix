@@ -5,12 +5,15 @@
   enableCompletion = true;
   shellAliases = {
     ll = "ls -al";
-    k = "kubectl";
-    kx = "kubectx";
-    kns = "kubens";
     v = "nvim";
     rebuild = "sudo nixos-rebuild switch";
     justpull = "git pull origin main --no-ff";
+    view = "nomacs";
+    # Kubernetes
+    k = "kubectl";
+    kx = "kubectx";
+    kns = "kubens";
+    kgworld = "kubectl get $(kubectl api-resources --verbs=list -o name |  paste -sd , -)";
   };
   history = {
     size = 10000;
@@ -32,9 +35,10 @@
     };
   }];
   initExtra = ''
+    PATH=$PATH:$HOME/.bin:$HOME/.krew/bin
     DEFAULT_USER=$USER
     pr () { 
-      gh pr create --assignee "@me" --reviewer kaozenn,simisimis --fill "$@"
+      gh pr create --assignee "@me" --reviewer kaozenn,simisimis,johnmarcou --fill "$@"
     }
     todo () {
       local description="$*" # get all arguments
@@ -51,6 +55,7 @@
     }
 
     export JIRA_API_TOKEN=$(cat /home/smorci/.keys/jira_api_token)
+    export AWS_PROFILE=mina
 
     [[ -z $DISPLAY ]] && [ "$(tty)" = "/dev/tty1" ] && mkdir -p ~/.log && exec bash -c 'sway > ~/.log/sway-$(tty | grep -oE "[^/]+$").log 2>&1 '
   '';
